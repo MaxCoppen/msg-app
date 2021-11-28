@@ -1,0 +1,13 @@
+.btn {
+    @apply px-4 py-2 bg-gray-500 text-white rounded-md;
+
+    &-green {
+        @extend .btn;
+        @apply bg-green-600;
+    }
+
+    &-blue {
+        @extend .btn;
+        @apply bg-blue-600;
+    }
+}

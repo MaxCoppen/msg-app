@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url(./elements.scss);
+
+#app {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    @apply bg-gray-700;
+}
+
+.view {
+    flex-grow: 1;
+
+    display: flex;
+}
+
+.footer {
+    height: 50px;
+
+    display: flex;
+
+    @apply bg-gray-600;
+    
+    .user {
+        width: 200px;
+
+        display: flex;
+    }
+
+    .friends {
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 0px;
+
+        @apply text-gray-150;
+    }
+}

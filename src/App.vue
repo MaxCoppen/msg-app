@@ -1,30 +1,46 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+
+  <div class="view">
+    <router-view />
   </div>
-  <router-view/>
+
+  <div class="footer">
+
+    <User />
+
+    <Blips />
+
+    <div class="friends">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+      </svg>
+    </div>
+
+  </div>
+
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { defineComponent } from "@vue/runtime-core";
+import User from "@/components/User.vue";
+import Blips from "@/components/Blips.vue";
 
-#nav {
-  padding: 30px;
+export default defineComponent({
+  name: 'App',
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  components: { User, Blips },
 
-    &.router-link-exact-active {
-      color: #42b983;
+  data() {
+    return {
+      isLoggedIn: false
     }
-  }
-}
-</style>
+  },
+
+  mounted() {
+    this.isLoggedIn = (global as any).user != undefined;
+    if (this.isLoggedIn == false) {
+      this.$router.push("/");
+    }
+  },
+});
+</script>
