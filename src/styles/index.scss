@@ -4,6 +4,10 @@
 
 @import url(./elements.scss);
 
+body {
+    margin: 0 !important;
+}
+
 #app {
     width: 100vw;
     height: 100vh;
