@@ -24,15 +24,15 @@
           <form class="mb-4">
             <div class="mb-6">
               <label
-                for="address"
+                for="code"
                 class="block mb-2 text-sm text-gray-200"
-                >IPv4 Address</label
+                >Friend Code</label
               >
               <input
-                type="address"
-                name="address"
-                v-model="address"
-                placeholder="The ipv4 address of your friend"
+                type="code"
+                name="code"
+                v-model="code"
+                placeholder="The invite code of your friend"
                 class="
                   w-full
                   px-3
@@ -50,34 +50,6 @@
               />
             </div>
             
-            <div class="mb-8">
-              <label
-                for="ipport"
-                class="block mb-2 text-sm text-gray-200"
-                >Address Port</label
-              >
-              <input
-                type="ipport"
-                name="ipport"
-                v-model="ipport"
-                placeholder="25256"
-                class="
-                  w-full
-                  px-3
-                  py-2
-                  bg-gray-700
-                  text-gray-100
-                  placeholder-gray-300
-                  border border-gray-600
-                  rounded-md
-                  focus:outline-none
-                  focus:ring
-                  focus:ring-indigo-900
-                  focus:border-indigo-600
-                "
-              />
-            </div>
-
             <div class="mb-6">
               <button type="button" :filled="isFilled" class="add-button w-full px-1 py-2 focus:outline-none" @click="AddFriend()">Start a chat</button>
             </div>
@@ -97,23 +69,19 @@ export default defineComponent({
 
   data() {
     return {
-      address: '',
-      ipport: '25256'
+      code: '',
     }
   },
 
   computed: {
     isFilled(): boolean {
-      const port = Number.parseInt(this.ipport);
-      if (isNaN(port) || this.address.length <= 0) return false;
-      if (Number.parseInt(this.ipport) < 1 || Number.parseInt(this.ipport) > 65535) return false;
-      return true;
+      return this.code.length >= 8;
     }
   },
 
   methods: {
     AddFriend() {
-      (global as any).user.initConnection(this.address, Number.parseInt(this.ipport));
+      (global as any).user.initConnection(this.code);
       this.$router.push("/chat");
     }
   }

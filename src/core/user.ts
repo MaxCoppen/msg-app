@@ -1,4 +1,5 @@
 import { ipcRenderer } from "electron";
+import { keyToIP } from "./base95";
 import UserNode from "./node";
 import NodeReciever from "./reciever";
 import NodeSender from "./sender";
@@ -27,7 +28,7 @@ export default class User {
 
                 if (!this.sender)
                 {
-                    this.initConnection(this.peer, this.peerport);
+                    this.initConnection(this.peer + ':' + this.peerport);
                 }
                 else if (this.sender.connected == false) {
                     this.sender.reconnect(this, this.peer, this.peerport);
@@ -43,10 +44,13 @@ export default class User {
     peer: string = "";
     peerport: number = 0;
 
-    initConnection(address: string, port: number) {
-        this.peer = address;
-        this.peerport = port;
-        this.sender = new NodeSender(this, address, port, () => {
+    initConnection(key: string) {
+        let address = key;
+        if (!key.includes(':')) address = keyToIP(key);
+        this.peer = address.split(':')[0];
+        this.peerport = Number.parseInt(address.split(':')[1]);
+        console.log('Connecting to ' + this.peer + ':' + this.peerport);
+        this.sender = new NodeSender(this, this.peer, this.peerport, () => {
             console.log('Connected to client');
         });
     }
